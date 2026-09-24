@@ -1,0 +1,3 @@
+import type { MetadataRoute } from 'next';
+const routes=['','expertise','healthcare','healthcare/platform-devices','healthcare/drug-delivery-devices','healthcare/healthcare-facility','healthcare/primary-packaging','healthcare/quality','healthcare/product-design','consumer','personal-care','lighting-appliances-automotive','about','vision-mission-values','awards-and-recognition','capabilities','quality','sustainability','team','investors','investors/company-information','investors/policies','investors/documents','investors/enquiry','careers','careers/opportunities','contact'];
+export default function sitemap():MetadataRoute.Sitemap{return routes.map(route=>({url:`https://www.elitetechindia.com/${route}`,changeFrequency:route?'monthly':'weekly',priority:route?.6:1}))}

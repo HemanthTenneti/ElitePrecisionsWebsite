@@ -1,0 +1,1 @@
+export default function Placeholder({label,className='',style}:{label?:string;className?:string;style?:React.CSSProperties}){return <div role="img" aria-label={label || 'Image placeholder'} className={`placeholder-image ${className}`} style={style}><span className="sr-only">{label || 'Image placeholder'}</span></div>}
