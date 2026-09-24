@@ -21,13 +21,24 @@ function Placeholder({ label, color = "#e4e6e7", className = "" }: { label: stri
 }
 
 function Hero({ title, statement, color, media }: { title: string; statement: string; color: string; media: string }) {
-  return <section className="relative flex min-h-[480px] items-center overflow-hidden text-white md:min-h-[480px]" style={{ backgroundColor: color }}>
-    <div className="mx-auto grid w-full max-w-[1280px] grid-cols-1 items-center gap-8 px-4 py-12 md:grid-cols-2 md:py-0">
-      <div className="z-10 self-start md:pt-0">
-        <h1 className="mb-14 max-w-[580px] text-[39px] font-extrabold leading-[1.12] md:text-[40px]">{title}</h1>
-        <p className="max-w-[620px] text-[43px] leading-[1.18] md:text-[50px]">{statement}</p>
+  const root = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!root.current) return;
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+      tl.fromTo(".hero-title", { y: 28, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7 })
+        .fromTo(".hero-statement", { y: 28, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7 }, "-=0.5")
+        .fromTo(".hero-media", { opacity: 0, scale: 1.04 }, { opacity: 1, scale: 1, duration: 0.9 }, "-=0.6");
+    }, root);
+    return () => ctx.revert();
+  }, [title]);
+  return <section ref={root} className="relative flex min-h-[480px] items-center overflow-hidden text-white md:min-h-[480px]" style={{ backgroundColor: color }}>
+    <div className="mx-auto grid w-full max-w-[1280px] grid-cols-1 items-center gap-8 px-4 py-16 md:grid-cols-2 md:py-0">
+      <div className="z-10">
+        <h1 className="hero-title mb-4 max-w-[580px] text-[28px] font-extrabold uppercase leading-[1.2] tracking-wide text-white/85 md:text-[30px]">{title}</h1>
+        <p className="hero-statement max-w-[620px] text-[38px] font-extrabold leading-[1.18] md:text-[46px]">{statement}</p>
       </div>
-      <Placeholder label={media} color={color} className="h-[370px] rounded-none border border-white/10 opacity-40 md:h-[480px]" />
+      <Placeholder label={media} color={color} className="hero-media h-[320px] rounded-none border border-white/10 opacity-40 md:h-[400px]" />
     </div>
   </section>;
 }
@@ -101,8 +112,8 @@ const healthcareLinks = [
 ] as const;
 
 function HealthcareNav({ active }: { active: string }) {
-  return <nav aria-label="Healthcare sections" className="flex flex-wrap items-center gap-x-6 gap-y-2 bg-[#575756] px-4 py-4 text-[14px] font-bold text-white md:justify-center">
-    {healthcareLinks.map(([label, url]) => <a key={url} href={url} aria-current={url === active ? "page" : undefined} className={`${url === active ? "font-normal" : ""} hover:underline`}>{label}</a>)}
+  return <nav aria-label="Healthcare sections" className="flex flex-wrap items-center gap-x-6 gap-y-2 bg-[#575756] px-4 py-4 text-[14px] font-normal text-white md:justify-center">
+    {healthcareLinks.map(([label, url]) => <a key={url} href={url} aria-current={url === active ? "page" : undefined} className={`${url === active ? "font-bold" : "font-normal"} hover:underline`}>{label}</a>)}
   </nav>;
 }
 
