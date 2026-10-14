@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, type ReactNode } from "react";
 import gsap from "gsap";
+import { healthcareCopy, consumerCopy, lightingCopy, qualityCopy } from "@/content/website";
 
 type Slug = "expertise" | "healthcare" | "consumer" | "personal-care" | "lighting-appliances-automotive" | `healthcare/${string}`;
 
@@ -80,15 +81,6 @@ function Clients({ title, names }: { title: string; names: string[] }) {
   </section>;
 }
 
-const consumerCapabilities = [
-  { title: "Product Design", text: "Design support for precision plastic components, from initial concepts through manufacturable product details." },
-  { title: "Rapid Prototyping", text: "Prototype development to evaluate fit, form and function before committing to production tooling." },
-  { title: "Precision Mould Manufacturing", text: "Mould design and manufacturing for demanding consumer and engineering applications." },
-  { title: "Mould Testing", text: "Testing and qualification to validate mould performance and support dependable production." },
-  { title: "Quality Management", text: "Our ISO 9001:2015 certified quality management system supports consistent precision work." },
-  { title: "Mass-production Support", text: "Support for the transition from approved tooling to repeatable mass production." },
-];
-
 const personalCapabilities = [
   { title: "Injection molding", text: "Precision injection moulding support for demanding component geometries and finishes." },
   { title: "Mold manufacturing", text: "Our precision mould design, manufacturing, testing and qualification services support accurate components." },
@@ -117,29 +109,23 @@ function HealthcareNav({ active }: { active: string }) {
   </nav>;
 }
 
+function SectorIntroduction({ children }: { children: ReactNode }) {
+  return <section className="expertise-reveal mx-auto max-w-[1280px] px-4 py-12"><p className="max-w-[960px] text-[18px] leading-[1.65] text-[#555]">{children}</p></section>;
+}
+
+const healthcareDestinations: Record<string, string> = {
+  "Product Design & DFM": "/healthcare/product-design",
+  "Precision Tooling": "/healthcare/healthcare-facility",
+  "Medical Device Development": "/healthcare/platform-devices",
+};
+
 function Healthcare() {
   return <>
     <HealthcareNav active="/healthcare" />
     <Hero title="Healthcare" statement="Innovative devices for global health" color={C.orange} media="Healthcare devices" />
-    <Feature title="Platform Devices" media="Platform devices" mediaColor="#a1bf55" href="/healthcare/platform-devices" button="Browse our platform devices">
-      <p className="text-xl">Advancing medical device concepts with precision tooling.</p>
-      <p>Pen injectors are a strategic growth platform for Elite. Our product design, prototyping and mould development capabilities can support the journey from concept through testing and qualification.</p>
-      <a className="font-semibold text-[#12018A] hover:underline" href="/healthcare/product-design">Read more about our product development services.</a>
-    </Feature>
-    <Feature title="Drug Delivery Development" media="Drug delivery devices" mediaColor="#497f97" href="/healthcare/drug-delivery-devices">
-      <p className="text-xl">Precision engineering for emerging drug delivery opportunities.</p>
-      <p>Our focus on medical pen injectors brings product design, rapid prototyping and precision mould development together as a strategic platform for future growth.</p>
-    </Feature>
-    <Feature title="Precision Mould Development" media="Healthcare tooling" mediaColor="#245b36" href="/healthcare/healthcare-facility">
-      <p>Elite has designed and manufactured precision injection moulds since 2003. Our work spans product design, rapid prototyping, mould design, manufacturing, testing and qualification, with support for mass production.</p>
-    </Feature>
-    <Feature title="Quality & Compliance" media="Quality control" mediaColor="#d8dadd" href="/healthcare/quality">
-      <p>Elite is ISO 9001:2015 certified. Quality management is central to the precision mould development process, from design through testing and qualification.</p>
-    </Feature>
-    <Feature title="Medical Components" media="Healthcare components" mediaColor={C.orange} href="/healthcare/primary-packaging" shaded>
-      <p>Our precision injection mould expertise supports the development of detailed components for healthcare and medical applications.</p>
-    </Feature>
-    <Clients title="Healthcare and Medical" names={["Product design", "Rapid prototyping", "Mould development", "Testing", "Qualification"]} />
+    <SectorIntroduction>{healthcareCopy.intro}</SectorIntroduction>
+    {healthcareCopy.items.map((item, i) => <Feature key={item.title} title={item.title} media={item.title} mediaColor={[C.lime, C.blue, C.green, C.orange][i % 4]} href={healthcareDestinations[item.title]} shaded={i % 2 === 1}><p>{item.text}</p></Feature>)}
+    <Feature title="Quality & Compliance" media="Quality control" mediaColor="#d8dadd" href="/healthcare/quality"><p>{qualityCopy[0]}</p><p>{qualityCopy[1]}</p></Feature>
   </>;
 }
 
@@ -155,7 +141,7 @@ const healthcareSubpages: Record<string, {
     statement: "Precision development for future drug delivery platforms",
     media: "Medical device concepts",
     sections: [
-      { title: "Medical pen injectors", text: "Medical pen injectors are a strategic growth platform for Elite. Our established strengths in product design, rapid prototyping and precision injection mould development provide a foundation for this work.", media: "Pen injector concept", color: C.lime },
+      { title: "Medical pen injectors", text: "Development of a mechanical pen injector, progressing from tooling and alpha prototypes to beta testing and device validation.", media: "Pen injector concept", color: C.lime },
       { title: "From concept to qualification", text: "A considered development process brings together product requirements, manufacturability, tooling, testing and qualification. Elite supports these stages with its precision mould expertise.", media: "Precision device component", color: C.blue },
     ],
     grid: { title: "Development Capabilities", items: [
@@ -169,7 +155,7 @@ const healthcareSubpages: Record<string, {
     statement: "Engineering concepts for medical pen injectors",
     media: "Drug delivery device concept",
     sections: [
-      { title: "Precision for emerging devices", text: "Elite sees medical pen injectors as a strategic area of growth. Our experience in precision injection mould design and manufacturing can support development of the intricate plastic components these concepts require.", media: "Injector component concept", color: C.blue },
+      { title: "Precision for emerging devices", text: "Development of a mechanical pen injector, progressing from tooling and alpha prototypes to beta testing and device validation.", media: "Injector component concept", color: C.blue },
       { title: "A connected development process", text: "Product design, rapid prototyping, mould design and manufacture, testing and qualification form a connected path from an initial concept toward production readiness.", media: "Collaborative mould design", color: C.orange },
     ],
     grid: { title: "Our Development Capabilities", items: [
@@ -210,9 +196,9 @@ const healthcareSubpages: Record<string, {
     statement: "Quality through each stage of mould development",
     media: "Quality inspection",
     sections: [
-      { title: "Quality management", text: "Elite is ISO 9001:2015 certified. Our quality management system supports precision injection mould development from design through manufacture, testing and qualification.", media: "Quality management", color: C.blue },
-      { title: "Mould life cycle", text: "Product design, rapid prototyping, mould design, manufacture and qualification each contribute to reliable production readiness.", media: "Mould testing", color: C.lime },
-      { title: "Testing and qualification", text: "Mould testing and qualification provide a structured way to validate component requirements before mass-production support.", media: "Component inspection", color: C.orange },
+      { title: "Quality management", text: `${qualityCopy[0]} ${qualityCopy[1]}`, media: "Quality management", color: C.blue },
+      { title: "Our in-house metrology infrastructure", text: qualityCopy[2], media: "Precision inspection", color: C.lime },
+      { title: "Quality driven engineering", text: qualityCopy[3], media: "Component inspection", color: C.orange },
     ],
   },
   "product-design": {
@@ -222,7 +208,7 @@ const healthcareSubpages: Record<string, {
     sections: [
       { title: "Crafted concepts", text: "Elite combines product design and rapid prototyping with precision injection mould expertise. This helps teams refine a concept while accounting for how its components will be made.", media: "Product concept", color: C.blue },
       { title: "Mould development", text: "Our process continues through mould design, manufacturing, testing and qualification, with support for mass-production readiness.", media: "Mould design", color: C.green },
-      { title: "Medical device direction", text: "Medical pen injectors are an important strategic growth platform for Elite. Precision tooling and design expertise underpin this developing direction.", media: "Medical device concept", color: C.orange },
+      { title: "Medical device direction", text: "Development of a mechanical pen injector, progressing from tooling and alpha prototypes to beta testing and device validation.", media: "Medical device concept", color: C.orange },
     ],
   },
 };
@@ -241,16 +227,8 @@ function HealthcareSubpage({ page }: { page: string }) {
 function Consumer() {
   return <>
     <Hero title="Consumer" statement="Creating safe, reliable and attractive plastics for families and homes" color={C.green} media="Homeware products" />
-    <Feature title="Homeware" media="Homeware brushes" mediaColor="#d4e8f0" href="/capabilities" button="Explore capabilities">
-      <p>Elite supports consumer and FMCG product development with precision injection mould design and manufacturing. From early product concepts to qualification, our process is built around accurate, repeatable tooling.</p>
-      <p>Our ISO 9001:2015 certified <a className="font-semibold text-[#12018A] hover:underline" href="/quality">quality management system</a> supports consistent work across each stage.</p>
-    </Feature>
-    <Feature title="Precision consumer tooling" media="Consumer product tooling" mediaColor="#f4f4f4" href="/capabilities" button="Explore capabilities" shaded>
-      <p>Since 2003, Elite has developed precision injection moulds for products across several sectors, including FMCG.</p>
-      <p>Our services include product design, rapid prototyping and mould design, manufacturing, testing and qualification.</p>
-      <p>We also support the move from qualified tooling to mass production.</p>
-    </Feature>
-    <InfoGrid title="Facilities and Capabilities" items={consumerCapabilities} round />
+    <SectorIntroduction>{consumerCopy.intro}</SectorIntroduction>
+    <InfoGrid title="Facilities and Capabilities" items={consumerCopy.items} round />
   </>;
 }
 
@@ -273,16 +251,8 @@ function PersonalCare() {
 function Lighting() {
   return <>
     <Hero title="Lighting, Appliances and Automotive" statement="Ultra-performance plastics for ultimate reliability in critical components" color={C.lime} media="Lighting and industrial components" />
-    <Feature title="Lighting" media="LED light casings" mediaColor="#dce1e2">
-      <p>Elite&apos;s precision injection moulding capabilities can support engineered plastic components for lighting products and assemblies.</p>
-    </Feature>
-    <Feature title="Appliances" media="Appliance knobs" mediaColor="#e9eaeb" shaded>
-      <p>Our work in engineering and consumer product tooling can support components for appliance concepts. We provide product design, prototyping, mould manufacture, testing and qualification.</p>
-    </Feature>
-    <Feature title="Automotive" media="Automotive components" mediaColor="#d6d9dc">
-      <p>Elite&apos;s engineering sector experience includes precision injection mould development for demanding component requirements. Our ISO 9001:2015 certified quality system supports each project stage.</p>
-    </Feature>
-    <Clients title="Engineering Capabilities" names={["Product design", "Precision moulds", "Mould testing", "Qualification"]} />
+    <SectorIntroduction>{lightingCopy.intro}</SectorIntroduction>
+    {lightingCopy.items.map((item, i) => <Feature key={item.title} title={item.title} media={item.title} mediaColor={["#dce1e2", "#e9eaeb", "#d6d9dc"][i % 3]} shaded={i % 2 === 1}><p>{item.text}</p></Feature>)}
   </>;
 }
 
